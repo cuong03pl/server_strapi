@@ -12,30 +12,49 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "CustomName": {
-      "type": "text"
-    },
-    "OrderDate": {
-      "type": "datetime",
-      "default": "2024-09-19T17:00:00.000Z"
-    },
-    "Status": {
-      "type": "enumeration",
-      "enum": [
-        "Pending",
-        "Processing",
-        "Complete",
-        "Cancelled"
-      ]
-    },
-    "total": {
-      "type": "decimal"
-    },
     "order_items": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::order-item.order-item",
       "mappedBy": "order"
+    },
+    "invoice": {
+      "type": "string"
+    },
+    "currency_code": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "decimal"
+    },
+    "return_url": {
+      "type": "string"
+    },
+    "cancel_url": {
+      "type": "string"
+    },
+    "notify_url": {
+      "type": "string"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "complete",
+        "cancel",
+        "pending"
+      ]
+    },
+    "custom_name": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
     }
   }
 }

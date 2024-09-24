@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "coupons",
+  "info": {
+    "singularName": "coupon",
+    "pluralName": "coupons",
+    "displayName": "Coupon",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "coupon_code": {
+      "type": "string",
+      "unique": true
+    },
+    "coupon_type": {
+      "type": "enumeration",
+      "enum": [
+        "percent",
+        "fix"
+      ]
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "value": {
+      "type": "decimal"
+    }
+  }
+}

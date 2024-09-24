@@ -806,6 +806,7 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
       'oneToMany',
       'api::product.product'
     >;
+    value: Attribute.Decimal;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -817,6 +818,40 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCouponCoupon extends Schema.CollectionType {
+  collectionName: 'coupons';
+  info: {
+    singularName: 'coupon';
+    pluralName: 'coupons';
+    displayName: 'Coupon';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    coupon_code: Attribute.String & Attribute.Unique;
+    coupon_type: Attribute.Enumeration<['percent', 'fix']>;
+    active: Attribute.Boolean & Attribute.DefaultTo<true>;
+    value: Attribute.Decimal;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::coupon.coupon',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::coupon.coupon',
       'oneToOne',
       'admin::user'
     > &
@@ -836,18 +871,22 @@ export interface ApiOrderOrder extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    CustomName: Attribute.Text;
-    OrderDate: Attribute.DateTime &
-      Attribute.DefaultTo<'2024-09-19T17:00:00.000Z'>;
-    Status: Attribute.Enumeration<
-      ['Pending', 'Processing', 'Complete', 'Cancelled']
-    >;
-    total: Attribute.Decimal;
     order_items: Attribute.Relation<
       'api::order.order',
       'oneToMany',
       'api::order-item.order-item'
     >;
+    invoice: Attribute.String;
+    currency_code: Attribute.String;
+    amount: Attribute.Decimal;
+    return_url: Attribute.String;
+    cancel_url: Attribute.String;
+    notify_url: Attribute.String;
+    status: Attribute.Enumeration<['complete', 'cancel', 'pending']>;
+    custom_name: Attribute.String;
+    address: Attribute.String;
+    email: Attribute.String;
+    phone: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -969,6 +1008,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::category.category': ApiCategoryCategory;
+      'api::coupon.coupon': ApiCouponCoupon;
       'api::order.order': ApiOrderOrder;
       'api::order-item.order-item': ApiOrderItemOrderItem;
       'api::product.product': ApiProductProduct;
